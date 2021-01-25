@@ -1,4 +1,10 @@
-import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import React, {
+    InputHTMLAttributes,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
@@ -9,8 +15,10 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FC<IInputProps> = ({ name, label, id, ...rest }) => {
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const { fieldName, defaultValue, error, registerField } = useField(name);
+
+    const [isFilled, setIsFilled] = useState(false);
 
     useEffect(() => {
         registerField({
@@ -20,6 +28,22 @@ const Input: React.FC<IInputProps> = ({ name, label, id, ...rest }) => {
         });
     }, [fieldName, registerField]);
 
+    const handleOnBlur = useCallback(() => {
+        if (inputRef.current?.value === '') {
+            setIsFilled(false);
+        } else {
+            setIsFilled(true);
+        }
+    }, []);
+
+    const handleOnChange = useCallback(() => {
+        if (inputRef.current?.value === '') {
+            setIsFilled(false);
+        } else {
+            setIsFilled(true);
+        }
+    }, []);
+
     return (
         <Container>
             <label htmlFor={`${id}`}>{label}</label>
@@ -27,9 +51,11 @@ const Input: React.FC<IInputProps> = ({ name, label, id, ...rest }) => {
                 id={id}
                 ref={inputRef}
                 defaultValue={defaultValue}
+                onBlur={handleOnBlur}
+                onChange={handleOnChange}
                 {...rest}
             />
-            <p>Error</p>
+            {!isFilled && error && <p>{error}</p>}
         </Container>
     );
 };
