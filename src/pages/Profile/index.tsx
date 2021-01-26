@@ -5,14 +5,14 @@ import Header from '../../components/Header';
 
 // import { Container } from './styles';
 
-const Home: React.FC = () => {
+const Profile: React.FC = () => {
     return (
         <>
             <Header />
-            <div>Home</div>
+            <div>Conta</div>
             <Footer />
         </>
     );
 };
 
-export default Home;
+export default Profile;
