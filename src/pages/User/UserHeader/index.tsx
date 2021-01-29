@@ -8,12 +8,18 @@ import { ReactComponent as Statistics } from '../../../assets/estatisticas.svg';
 import { ReactComponent as AddPhoto } from '../../../assets/adicionar.svg';
 import { ReactComponent as Logout } from '../../../assets/sair.svg';
 
-import { Container } from './styles';
+import { useMedia } from '../../../hooks/media';
+import { Container, MobileButton } from './styles';
 
 const UserHeader: React.FC = () => {
-    const [mobile, setMobile] = useState(false);
     const [title, setTitle] = useState('');
+    const [mobileMenu, setMobileMenu] = useState(false);
+
     const location = useLocation();
+
+    const mobile = useMedia();
+
+    console.log(mobile);
 
     useEffect(() => {
         const { pathname } = location;
@@ -29,6 +35,8 @@ const UserHeader: React.FC = () => {
                 setTitle('Minha Conta');
                 break;
         }
+
+        setMobileMenu(false);
     }, [location]);
 
     const { userLogout } = useUser();
@@ -37,25 +45,38 @@ const UserHeader: React.FC = () => {
         <Container>
             <h1 className="title">{title}</h1>
 
-            <nav>
+            {mobile.match && (
+                <MobileButton
+                    type="button"
+                    aria-label="Menu"
+                    onClick={() => setMobileMenu(!mobileMenu)}
+                    className={`${mobileMenu && 'mobileButtonActive'}`}
+                />
+            )}
+
+            <nav
+                className={`${mobile.match ? 'navMobile' : 'navMenu'} ${
+                    mobileMenu && 'navMobileActive'
+                }`}
+            >
                 <NavLink to="/conta" exact activeClassName="active">
                     <Feed />
-                    {mobile && 'Minhas Fotos'}
+                    {mobile.match && 'Minhas Fotos'}
                 </NavLink>
 
                 <NavLink to="/conta/estatistica" activeClassName="active">
                     <Statistics />
-                    {mobile && 'Estatíticas'}
+                    {mobile.match && 'Estatíticas'}
                 </NavLink>
 
                 <NavLink to="/conta/postar" activeClassName="active">
                     <AddPhoto />
-                    {mobile && 'Adicionar Foto'}
+                    {mobile.match && 'Adicionar Foto'}
                 </NavLink>
 
                 <button type="button" onClick={userLogout}>
                     <Logout />
-                    {mobile && 'Sair'}
+                    {mobile.match && 'Sair'}
                 </button>
             </nav>
         </Container>
