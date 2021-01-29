@@ -8,7 +8,7 @@ import { useUser } from '../../hooks/user';
 import { Container } from './styles';
 
 const Header: React.FC = () => {
-    const { data, isLogged, userLogout } = useUser();
+    const { data, isLogged } = useUser();
 
     return (
         <Container>

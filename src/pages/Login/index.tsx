@@ -16,7 +16,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import ErrorComponent from '../../components/ErrorComponent';
 
-interface ICreteSession {
+interface ICreateSession {
     username: string;
     password: string;
 }
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
 
     const handleSubmit = useCallback(
-        async (data: ICreteSession) => {
+        async (data: ICreateSession) => {
             try {
                 formRef.current?.setErrors({});
 

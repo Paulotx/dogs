@@ -18,7 +18,7 @@ interface IResponse {
         headers: {
             [key: string]: string;
         };
-        body?: string;
+        body?: string | FormData;
     };
 }
 
@@ -69,6 +69,19 @@ export function USER_POST(body: IRequestUser): IResponse {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
+        },
+    };
+}
+
+export function PHOTO_POST(formData: FormData, token: string): IResponse {
+    return {
+        url: `${API_URL}/api/photo`,
+        options: {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
         },
     };
 }

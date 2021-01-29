@@ -54,7 +54,7 @@ const UserProvider: React.FC = ({ children }) => {
                 const response = await fetch(url, options);
 
                 if (!response.ok) {
-                    throw new Error('Problema da autenticação');
+                    throw new Error('Problema na autenticação');
                 }
 
                 const { token } = await response.json();
