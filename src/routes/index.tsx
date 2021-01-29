@@ -5,14 +5,16 @@ import Route from './Route';
 
 import Home from '../pages/Home';
 import Login from '../pages/Login';
-import Profile from '../pages/Profile';
+import LoginCreate from '../pages/Login/Create';
+import User from '../pages/User';
 
 const Routes: React.FC = () => {
     return (
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/conta" component={Profile} isPrivate />
+            <Route path="/login" exact component={Login} />
+            <Route path="/login/criar" component={LoginCreate} />
+            <Route path="/conta" component={User} isPrivate />
         </Switch>
     );
 };

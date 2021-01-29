@@ -5,6 +5,12 @@ interface IRequestToken {
     password: string;
 }
 
+interface IRequestUser {
+    username: string;
+    email: string;
+    password: string;
+}
+
 interface IResponse {
     url: string;
     options: {
@@ -50,6 +56,19 @@ export function USER_GET(token: string): IResponse {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        },
+    };
+}
+
+export function USER_POST(body: IRequestUser): IResponse {
+    return {
+        url: `${API_URL}/api/user`,
+        options: {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
         },
     };
 }

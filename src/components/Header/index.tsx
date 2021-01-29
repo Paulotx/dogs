@@ -22,9 +22,6 @@ const Header: React.FC = () => {
                         <Link to="/conta" className="login">
                             {data.nome}
                         </Link>
-                        <Link to="/login" onClick={userLogout}>
-                            Sair
-                        </Link>
                     </>
                 ) : (
                     <Link to="/login" className="login">
