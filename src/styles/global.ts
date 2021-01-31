@@ -84,5 +84,4 @@ export default createGlobalStyle`
         border-radius: 0.32rem;
         z-index: -1;
     }
-
 `;

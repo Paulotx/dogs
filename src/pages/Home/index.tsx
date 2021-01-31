@@ -1,15 +1,18 @@
 import React from 'react';
+import Feed from '../../components/Feed';
 
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
-// import { Container } from './styles';
+import { Container } from './styles';
 
 const Home: React.FC = () => {
     return (
         <>
             <Header />
-            <div>Home</div>
+            <Container>
+                <Feed />
+            </Container>
             <Footer />
         </>
     );

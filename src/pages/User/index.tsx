@@ -20,7 +20,8 @@ const Profile: React.FC = () => {
                 <UserHeader />
 
                 {pathname === '/conta/postar' && <UserPhotoPost />}
-                <Feed />
+
+                {pathname === '/conta' && <Feed />}
             </Container>
 
             <Footer />

@@ -1,4 +1,5 @@
 import React, { FormEvent, useCallback, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -25,6 +26,8 @@ const UserPhotoPost: React.FC = () => {
     const [error, setError] = useState('');
 
     const formRef = useRef<FormHandles>(null);
+
+    const history = useHistory();
 
     const handleImgChange = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
@@ -68,6 +71,8 @@ const UserPhotoPost: React.FC = () => {
                     setError(
                         'Problema no cadastro. Verifique os campos e tente novamente!',
                     );
+                } else {
+                    history.push('/conta');
                 }
             }
         } catch (err) {
