@@ -19,8 +19,6 @@ const UserHeader: React.FC = () => {
 
     const mobile = useMedia();
 
-    console.log(mobile);
-
     useEffect(() => {
         const { pathname } = location;
 

@@ -38,51 +38,54 @@ const UserPhotoPost: React.FC = () => {
         [],
     );
 
-    const handleSubmit = useCallback(async (data: IPhotoPost) => {
-        try {
-            formRef.current?.setErrors({});
-            setLoading(true);
-            setError('');
+    const handleSubmit = useCallback(
+        async (data: IPhotoPost) => {
+            try {
+                formRef.current?.setErrors({});
+                setLoading(true);
+                setError('');
 
-            const schema = Yup.object().shape({
-                name: Yup.string().required('Campo é obrigatório'),
-                weight: Yup.string().required('Campo é obrigatório'),
-                age: Yup.string().required('Compo é obrigatório'),
-            });
+                const schema = Yup.object().shape({
+                    name: Yup.string().required('Campo é obrigatório'),
+                    weight: Yup.string().required('Campo é obrigatório'),
+                    age: Yup.string().required('Compo é obrigatório'),
+                });
 
-            await schema.validate(data, {
-                abortEarly: false,
-            });
+                await schema.validate(data, {
+                    abortEarly: false,
+                });
 
-            const formData = new FormData();
+                const formData = new FormData();
 
-            formData.append('nome', data.name);
-            formData.append('peso', data.weight);
-            formData.append('idade', data.age);
-            formData.append('idade', data.img);
+                formData.append('nome', data.name);
+                formData.append('peso', data.weight);
+                formData.append('idade', data.age);
+                formData.append('idade', data.img);
 
-            const token = window.localStorage.getItem('token');
+                const token = window.localStorage.getItem('token');
 
-            if (token) {
-                const { url, options } = PHOTO_POST(formData, token);
-                const response = await fetch(url, options);
+                if (token) {
+                    const { url, options } = PHOTO_POST(formData, token);
+                    const response = await fetch(url, options);
 
-                if (!response.ok) {
-                    setError(
-                        'Problema no cadastro. Verifique os campos e tente novamente!',
-                    );
-                } else {
-                    history.push('/conta');
+                    if (!response.ok) {
+                        setError(
+                            'Problema no cadastro. Verifique os campos e tente novamente!',
+                        );
+                    } else {
+                        history.push('/conta');
+                    }
                 }
-            }
-        } catch (err) {
-            const errors = getValidationErrors(err);
+            } catch (err) {
+                const errors = getValidationErrors(err);
 
-            formRef.current?.setErrors(errors);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+                formRef.current?.setErrors(errors);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [history],
+    );
 
     return (
         <Container className="animeLeft">
