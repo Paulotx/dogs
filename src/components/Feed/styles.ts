@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 import view from '../../assets/visualizacao.svg';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+    padding: 0 1.6rem;
+`;
 
 export const FeedPhotos = styled.div`
     ul {
@@ -24,7 +26,7 @@ export const FeedPhotosItem = styled.li`
     overflow: hidden;
     cursor: pointer;
 
-    img {
+    div {
         grid-area: 1/1;
     }
 

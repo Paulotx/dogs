@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState, MouseEvent } from 'react';
 import { PHOTOS_GET, PHOTO_GET } from '../../services/api';
 import Loading from '../Loading';
 import Photo from '../Photo';
+import PhotoImage from '../PhotoImage';
 
 import { Container, FeedPhotos, FeedPhotosItem, ModalPhoto } from './styles';
 
@@ -64,7 +65,9 @@ const Feed: React.FC = () => {
                 });
 
                 const response = await fetch(url, options);
-                setData(await response.json());
+                const json = await response.json();
+
+                setData(json);
 
                 if (!response.ok) {
                     throw new Error('Erro ao carregar feed');
@@ -132,7 +135,7 @@ const Feed: React.FC = () => {
                                 key={photo.id}
                                 onClick={() => handleClickPhoto(photo)}
                             >
-                                <img src={photo.src} alt={photo.title} />
+                                <PhotoImage src={photo.src} alt={photo.title} />
                                 <span>{photo.acessos}</span>
                             </FeedPhotosItem>
                         ))}

@@ -26,6 +26,7 @@ export const Container = styled.div`
         height: auto;
         max-width: calc(100vh - 6.4rem);
         overflow-y: auto;
+        max-height: 100%;
         grid-template-columns: minmax(32rem, 64rem);
     }
 
@@ -87,10 +88,12 @@ export const Container = styled.div`
     }
 
     .comments {
+        overflow-y: auto;
+        word-break: break-word;
+
         ul {
             padding: 0 3.2rem;
-            overflow-y: auto;
-            word-break: break-word;
+            max-height: 100%;
 
             li {
                 margin-bottom: 0.8rem;
@@ -156,5 +159,24 @@ export const Container = styled.div`
                 }
             }
         }
+    }
+`;
+
+export const PhotoDelete = styled.button`
+    background: #ddd;
+    padding: 0.48rem 0.96rem;
+    line-height: 1;
+    border: 1px solid transparent;
+    font-size: 1.4rem;
+    font-family: var(--type-first);
+    cursor: pointer;
+    border-radius: 0.64rem;
+    transition: 0.1s;
+
+    &:hover {
+        outline: none;
+        background: #fff;
+        box-shadow: 0 0 0 3px #eee;
+        border-color: #333;
     }
 `;

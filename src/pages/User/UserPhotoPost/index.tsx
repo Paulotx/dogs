@@ -66,7 +66,12 @@ const UserPhotoPost: React.FC = () => {
 
                 if (token) {
                     const { url, options } = PHOTO_POST(formData, token);
+
                     const response = await fetch(url, options);
+                    const json = await response.json();
+
+                    console.log(response);
+                    console.log(json);
 
                     if (!response.ok) {
                         setError(

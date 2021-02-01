@@ -5,6 +5,7 @@ export const Container = styled.section`
     grid-template-columns: 1fr 1fr;
     gap: 3.2rem;
     margin-bottom: 3.2rem;
+    padding: 0 1.6rem;
 
     #img {
         margin-bottom: 1.6rem;

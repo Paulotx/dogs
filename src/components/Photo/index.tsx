@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { useUser } from '../../hooks/user';
 import { ReactComponent as Enviar } from '../../assets/enviar.svg';
 
-import { Container } from './styles';
-import { COMMENT_POST } from '../../services/api';
+import { Container, PhotoDelete } from './styles';
+import { COMMENT_POST, PHOTO_DELETE } from '../../services/api';
 import ErrorComponent from '../ErrorComponent';
+import PhotoImage from '../PhotoImage';
 
 interface IPhoto {
     acessos: string;
@@ -54,7 +55,7 @@ const Photo: React.FC<IData> = ({ data }) => {
 
     const { photo } = data;
 
-    const { isLogged } = useUser();
+    const { isLogged, data: dataUser } = useUser();
 
     const handleSubmit = useCallback(
         async (event: FormEvent<HTMLFormElement>) => {
@@ -77,18 +78,41 @@ const Photo: React.FC<IData> = ({ data }) => {
         [comment, data.photo.id, commentsPhoto],
     );
 
+    const handleClickDelete = useCallback(async (id: number) => {
+        const confirm = window.confirm('Tem certeza que deseja deletar?');
+
+        if (confirm) {
+            const { url, options } = PHOTO_DELETE(id);
+            const response = await fetch(url, options);
+
+            if (response.ok) {
+                window.location.reload();
+            }
+        }
+    }, []);
+
     return (
         <Container>
             <div className="img">
-                <img src={photo.src} alt={photo.title} />
+                <PhotoImage src={photo.src} alt={photo.title} />
             </div>
 
             <div className="details">
                 <div>
                     <p>
-                        <Link to={`/perfil/${photo.author}`}>
-                            @{photo.author}
-                        </Link>
+                        {dataUser && dataUser.username === photo.author ? (
+                            <PhotoDelete
+                                type="button"
+                                onClick={() => handleClickDelete(photo.id)}
+                            >
+                                Deletar
+                            </PhotoDelete>
+                        ) : (
+                            <Link to={`/perfil/${photo.author}`}>
+                                @{photo.author}
+                            </Link>
+                        )}
+
                         <span>{photo.acessos}</span>
                     </p>
 
