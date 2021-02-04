@@ -42,7 +42,11 @@ interface IModalPhoto {
     photo: IPhoto;
 }
 
-const Feed: React.FC = () => {
+interface IFeed {
+    userId?: number;
+}
+
+const Feed: React.FC<IFeed> = ({ userId }) => {
     const [errorPhotos, setErrorPhotos] = useState('');
     const [_, setErrorModal] = useState('');
     const [loadingPhotos, setLoadingPhotos] = useState(false);
@@ -51,6 +55,8 @@ const Feed: React.FC = () => {
     const [modalPhoto, setModalPhoto] = useState<IModalPhoto>(
         {} as IModalPhoto,
     );
+    const [total, setTotal] = useState(6);
+    const [infinite, setInfinite] = useState(true);
 
     useEffect(() => {
         async function fetchPhotos(): Promise<void> {
@@ -60,14 +66,18 @@ const Feed: React.FC = () => {
 
                 const { url, options } = PHOTOS_GET({
                     page: 1,
-                    total: 6,
-                    user: '0',
+                    total,
+                    user: 0,
                 });
 
                 const response = await fetch(url, options);
-                const json = await response.json();
+                const json: [] = await response.json();
 
                 setData(json);
+
+                if (response && response.ok && json.length % 6 !== 0) {
+                    setInfinite(false);
+                }
 
                 if (!response.ok) {
                     throw new Error('Erro ao carregar feed');
@@ -80,7 +90,53 @@ const Feed: React.FC = () => {
         }
 
         fetchPhotos();
-    }, []);
+    }, [total, setInfinite]);
+
+    useEffect(() => {
+        let wait = false;
+
+        function infiniteScrollTypeWheel(): void {
+            if (infinite) {
+                const scroll = window.scrollY;
+                const height = document.body.offsetHeight - window.innerHeight;
+
+                if (scroll > height * 0.75 && !wait) {
+                    setTotal(total + 6);
+
+                    wait = true;
+
+                    setTimeout(() => {
+                        wait = false;
+                    }, 500);
+                }
+            }
+        }
+
+        function infiniteScrollTypeScroll(): void {
+            if (infinite) {
+                const scroll = window.scrollY;
+                const height = document.body.offsetHeight - window.innerHeight;
+
+                if (scroll > height * 0.75 && !wait) {
+                    setTotal(total + 6);
+
+                    wait = true;
+
+                    setTimeout(() => {
+                        wait = false;
+                    }, 500);
+                }
+            }
+        }
+
+        window.addEventListener('wheel', infiniteScrollTypeWheel);
+        window.addEventListener('scroll', infiniteScrollTypeScroll);
+
+        return () => {
+            window.removeEventListener('wheel', infiniteScrollTypeWheel);
+            window.removeEventListener('scroll', infiniteScrollTypeScroll);
+        };
+    }, [infinite, total]);
 
     const handleClickPhoto = useCallback(async (photo: IPhoto) => {
         try {

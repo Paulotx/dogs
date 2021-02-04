@@ -9,8 +9,11 @@ import UserHeader from './UserHeader';
 import UserPhotoPost from './UserPhotoPost';
 
 import { Container } from './styles';
+import { useUser } from '../../hooks/user';
 
 const Profile: React.FC = () => {
+    const { data } = useUser();
+
     const { pathname } = useLocation();
 
     return (
@@ -21,7 +24,7 @@ const Profile: React.FC = () => {
 
                 {pathname === '/conta/postar' && <UserPhotoPost />}
 
-                {pathname === '/conta' && <Feed />}
+                {pathname === '/conta' && <Feed userId={data.id} />}
             </Container>
 
             <Footer />

@@ -13,7 +13,6 @@ const PhotoImage: React.FC<IPhotoImage> = ({ alt, ...rest }) => {
     const handleLoad = useCallback(() => {
         setSkeleton(false);
         setOpacity(1);
-        console.log('Teste');
     }, []);
 
     return (

@@ -14,7 +14,7 @@ interface IRequestUser {
 interface IRequestPhotos {
     page: number;
     total: number;
-    user: string;
+    user: number | undefined;
 }
 
 interface IResponse {
