@@ -7,6 +7,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import LoginCreate from '../pages/Login/Create';
 import User from '../pages/User';
+import NotFound from '../components/NotFound';
 
 const Routes: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ const Routes: React.FC = () => {
             <Route path="/conta" exact component={User} isPrivate />
             <Route path="/conta/postar" component={User} isPrivate />
             <Route path="/conta/estatistica" component={User} isPrivate />
+            <Route path="*" component={NotFound} />
         </Switch>
     );
 };

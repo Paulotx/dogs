@@ -12,6 +12,7 @@ import Button from '../../../components/Button';
 import FileInput from '../../../components/FileInput';
 
 import { Container, Preview } from './styles';
+import Head from '../../../components/Head';
 
 interface IPhotoPost {
     name: string;
@@ -68,10 +69,7 @@ const UserPhotoPost: React.FC = () => {
                     const { url, options } = PHOTO_POST(formData, token);
 
                     const response = await fetch(url, options);
-                    const json = await response.json();
-
-                    console.log(response);
-                    console.log(json);
+                    await response.json();
 
                     if (!response.ok) {
                         setError(
@@ -94,6 +92,7 @@ const UserPhotoPost: React.FC = () => {
 
     return (
         <Container className="animeLeft">
+            <Head title="Nova Foto" />
             <Form onSubmit={handleSubmit} ref={formRef}>
                 <Input type="text" label="Nome" name="name" id="name" />
                 <Input type="number" label="Peso" name="weight" id="weight" />

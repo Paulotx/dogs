@@ -10,6 +10,7 @@ import UserPhotoPost from './UserPhotoPost';
 
 import { Container } from './styles';
 import { useUser } from '../../hooks/user';
+import Head from '../../components/Head';
 
 const Profile: React.FC = () => {
     const { data } = useUser();
@@ -19,6 +20,8 @@ const Profile: React.FC = () => {
     return (
         <>
             <Header />
+            <Head title={data.nome} />
+
             <Container>
                 <UserHeader />
 

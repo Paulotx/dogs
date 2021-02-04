@@ -15,6 +15,7 @@ import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { USER_POST } from '../../../services/api';
+import Head from '../../../components/Head';
 
 interface ICreteSession {
     username: string;
@@ -82,6 +83,8 @@ const Login: React.FC = () => {
             <Header />
 
             <Container>
+                <Head title="Criar Login" />
+
                 <LoginContainer>
                     <LoginContent className="animeLeft">
                         <h1 className="title">Cadastre-se</h1>
